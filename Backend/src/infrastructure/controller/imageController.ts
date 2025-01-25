@@ -3,6 +3,9 @@ import { Request, Response } from 'express';
 import { ImageRepository } from '../../domain/repositories/ImageRepository';
 import { uploadImagesUseCase, getUserImagesUseCase, deleteUserImageUseCase, editImageUseCase, updateOrderUseCase } from '../../application/usecases/image/imageUseCases';
 import { ImageEntity } from '../../domain/entities/ImageEntity';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const imageRepository = new ImageRepository();
 

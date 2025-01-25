@@ -41,7 +41,7 @@ const SignUp: React.FC = () => {
 
     try {
      
-      const response = await axios.post("http://localhost:8000/register", {
+      const response = await axios.post("https://your-service.onrender.com/register", {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,

@@ -91,7 +91,7 @@ const EnterOtp: React.FC = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8000/verify-otp', { email, otp });
+            const response = await axios.post('https://your-service.onrender.com/verify-otp', { email, otp });
             toast.success(response.data.message || 'OTP verified successfully');
             localStorage.removeItem('otpExpiryTime'); 
             navigate('/reset-password', { state: { email } });
@@ -109,7 +109,7 @@ const EnterOtp: React.FC = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8000/resend-otp', { email });
+            const response = await axios.post('https://your-service.onrender.com/resend-otp', { email });
             toast.success(response.data.message || 'OTP resent successfully');
             startTimer(OTP_DURATION); 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

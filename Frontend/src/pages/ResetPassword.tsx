@@ -50,7 +50,7 @@ const ResetPassword: React.FC = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8000/reset-password', {
+            const response = await axios.post('https://your-service.onrender.com/reset-password', {
                 email,
                 password,
             });

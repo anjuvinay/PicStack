@@ -34,7 +34,7 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir);
 }
 
-// Serve Static Files from 'uploads' Folder
+
  app.use('/uploads', express.static(uploadsDir));
 
 

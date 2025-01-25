@@ -2,6 +2,9 @@
 import { IUserRepository } from '../../domain/repositories/interfaces/IUserRepository.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 
 export class AuthService {

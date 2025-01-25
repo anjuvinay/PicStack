@@ -1,5 +1,9 @@
 
 import mongoose from 'mongoose';
+import dotenv from "dotenv";
+
+dotenv.config();
+
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://mongodb:mongodb@cluster0.c1p4y.mongodb.net/picstack';
 

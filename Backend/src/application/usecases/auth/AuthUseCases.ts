@@ -4,6 +4,9 @@ import { UserRepository } from "../../../domain/repositories/UserRepository";
 import { IUserRepository } from "../../../domain/repositories/interfaces/IUserRepository";
 import { IUser } from "../../../types/User.js";
 import { sendVerificationEmail } from "../../services/OtpService";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 
 
@@ -138,9 +141,7 @@ export class AuthUseCases {
 
   async resetPassword(email: string, newPassword: string): Promise<string> {
     console.log("Reached reset password")
-    // if (!this.verifiedEmails.has(email)) {
-    //     throw new Error('Email is not authorized to reset the password');
-    // }
+    
   
     const user = await this.userRepository.findByEmail(email);
     if (!user) {

@@ -37,7 +37,7 @@ const Home: React.FC = () => {
 
   const fetchImages = async (token: string) => {
     try {
-      const response = await axios.get("https://your-service.onrender.com/images", {
+      const response = await axios.get("https://picbackend.onrender.com/images", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -98,7 +98,7 @@ const Home: React.FC = () => {
         formData.append("titles", titles[idx]);
       });
 
-      await axios.post("https://your-service.onrender.com/upload", formData, {
+      await axios.post("https://picbackend.onrender.com/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -141,7 +141,7 @@ const Home: React.FC = () => {
       if (editingTitle) formData.append("title", editingTitle);
       if (editingFile) formData.append("image", editingFile);
 
-      await axios.put("https://your-service.onrender.com/image", formData, {
+      await axios.put("https://picbackend.onrender.com/image", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -166,7 +166,7 @@ const Home: React.FC = () => {
         toast.error("You are not logged in. Please log in to delete images.");
         return;
       }
-      await axios.delete("https://your-service.onrender.com/image", {
+      await axios.delete("https://picbackend.onrender.com/image", {
         data: { Id: image.id },
         headers: {
           Authorization: `Bearer ${token}`,
@@ -201,7 +201,7 @@ const Home: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       if (token) {
-        await axios.post("https://your-service.onrender.com/reorder", { reorderedImages: updatedOrder }, {
+        await axios.post("https://picbackend.onrender.com/reorder", { reorderedImages: updatedOrder }, {
           headers: { Authorization: `Bearer ${token}` },
         });
         toast.success("Image order updated successfully!");

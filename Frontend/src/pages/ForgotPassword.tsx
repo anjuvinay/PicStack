@@ -26,7 +26,7 @@ const ForgotPassword: React.FC = () => {
         }
 
         try {
-            const response = await axios.post('https://your-service.onrender.com/forgot-password', { email });
+            const response = await axios.post('https://picbackend.onrender.com/forgot-password', { email });
             toast.success(response.data.message || 'Check your email for the OTP');
             navigate('/enter-otp', { state: { email } });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

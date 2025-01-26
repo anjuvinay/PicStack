@@ -37,7 +37,7 @@ const Home: React.FC = () => {
 
   const fetchImages = async (token: string) => {
     try {
-      const response = await axios.get("https://picbackend.onrender.com/images", {
+      const response = await axios.get("http://localhost:8000/images", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -98,7 +98,7 @@ const Home: React.FC = () => {
         formData.append("titles", titles[idx]);
       });
 
-      await axios.post("https://picbackend.onrender.com/upload", formData, {
+      await axios.post("http://localhost:8000/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -130,26 +130,26 @@ const Home: React.FC = () => {
         toast.error("You are not logged in. Please log in to edit images.");
         return;
       }
-
+  
       if (!editingTitle && !editingFile) {
         toast.error("Please provide a new title or image.");
         return;
       }
-
+  
       const formData = new FormData();
       formData.append("id", id);
       if (editingTitle) formData.append("title", editingTitle);
       if (editingFile) formData.append("image", editingFile);
-
-      await axios.put("https://picbackend.onrender.com/image", formData, {
+  
+      await axios.put("http://localhost:8000/image", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
       });
-
+  
       toast.success("Image updated successfully!");
-      fetchImages(token);
+      fetchImages(token); // Refresh the images
       setEditingImageId(null);
       setEditingTitle("");
       setEditingFile(null);
@@ -159,26 +159,36 @@ const Home: React.FC = () => {
     }
   };
 
-  const handleDelete = async (image: UploadedImage) => {
+  
+
+  const handleDelete = async (id: string) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
         toast.error("You are not logged in. Please log in to delete images.");
         return;
       }
-      await axios.delete("https://picbackend.onrender.com/image", {
-        data: { Id: image.id },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+  
+      const response = await axios.delete("http://localhost:8000/image", {
+        data: { id }, // Send the image ID in the body
+        headers: { Authorization: `Bearer ${token}` },
       });
-      toast.success("Image deleted successfully!");
-      setFetchedImages(fetchedImages.filter((img) => img.id !== image.id));
+  
+      if (response.data.success) {
+        setFetchedImages((prevImages) =>
+          prevImages.filter((image) => image.id !== id)
+        );
+        toast.success("Image deleted successfully!");
+      } else {
+        toast.error(response.data.message || "Failed to delete image.");
+      }
     } catch (error) {
       console.error("Error deleting image:", error);
       toast.error("Failed to delete image.");
     }
   };
+  
+  
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>, index: number) => {
     e.dataTransfer.setData("index", index.toString());
@@ -201,7 +211,7 @@ const Home: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       if (token) {
-        await axios.post("https://picbackend.onrender.com/reorder", { reorderedImages: updatedOrder }, {
+        await axios.post("http://localhost:8000/reorder", { reorderedImages: updatedOrder }, {
           headers: { Authorization: `Bearer ${token}` },
         });
         toast.success("Image order updated successfully!");
@@ -305,7 +315,7 @@ const Home: React.FC = () => {
                         Edit
                       </button>
                       <button
-                        onClick={() => handleDelete(img)}
+                        onClick={() => handleDelete(img.id)}
                         className="px-5 py-1 bg-cyan-700 text-white text-xs rounded hover:bg-cyan-600"
                       >
                         Delete

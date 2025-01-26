@@ -37,7 +37,7 @@ const Home: React.FC = () => {
 
   const fetchImages = async (token: string) => {
     try {
-      const response = await axios.get("http://localhost:8000/images", {
+      const response = await axios.get("https://picbackend.onrender.com/images", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -98,7 +98,7 @@ const Home: React.FC = () => {
         formData.append("titles", titles[idx]);
       });
 
-      await axios.post("http://localhost:8000/upload", formData, {
+      await axios.post("https://picbackend.onrender.com/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -141,7 +141,7 @@ const Home: React.FC = () => {
       if (editingTitle) formData.append("title", editingTitle);
       if (editingFile) formData.append("image", editingFile);
   
-      await axios.put("http://localhost:8000/image", formData, {
+      await axios.put("https://picbackend.onrender.com/image", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -169,7 +169,7 @@ const Home: React.FC = () => {
         return;
       }
   
-      const response = await axios.delete("http://localhost:8000/image", {
+      const response = await axios.delete("https://picbackend.onrender.com/image", {
         data: { id }, // Send the image ID in the body
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -211,7 +211,7 @@ const Home: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       if (token) {
-        await axios.post("http://localhost:8000/reorder", { reorderedImages: updatedOrder }, {
+        await axios.post("https://picbackend.onrender.com/reorder", { reorderedImages: updatedOrder }, {
           headers: { Authorization: `Bearer ${token}` },
         });
         toast.success("Image order updated successfully!");

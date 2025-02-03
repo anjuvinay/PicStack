@@ -58,15 +58,35 @@ const Home: React.FC = () => {
     }
   };
 
+  // const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files) {
+  //     const fileArray = Array.from(e.target.files);
+  //     setSelectedFiles(fileArray);
+  //     setTitles(fileArray.map(() => ""));
+  //     const previewUrls = fileArray.map((file) => URL.createObjectURL(file));
+  //     setPreviews(previewUrls);
+  //   }
+  // };
+
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const fileArray = Array.from(e.target.files);
-      setSelectedFiles(fileArray);
-      setTitles(fileArray.map(() => ""));
-      const previewUrls = fileArray.map((file) => URL.createObjectURL(file));
-      setPreviews(previewUrls);
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+  
+      const validFiles = fileArray.filter((file) =>
+        allowedTypes.includes(file.type)
+      );
+  
+      if (validFiles.length !== fileArray.length) {
+        toast.error("Only image files (JPG, PNG, GIF, WEBP) are allowed!");
+      }
+  
+      setSelectedFiles(validFiles);
+      setTitles(validFiles.map(() => ""));
+      setPreviews(validFiles.map((file) => URL.createObjectURL(file)));
     }
   };
+  
 
   const handleTitleChange = (index: number, value: string) => {
     setTitles((prev) => {

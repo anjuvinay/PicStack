@@ -104,6 +104,11 @@ const Home: React.FC = () => {
       return;
     }
 
+    if (titles.some((title) => title.trim() === "")) {
+      toast.error("Title cannot be empty.");
+      return;
+    }
+
     try {
       const token = localStorage.getItem("token");
 
